@@ -1,11 +1,9 @@
 import os
 from pathlib import Path
 
-from dotenv import load_dotenv
 import pandas as pd
 
-load_dotenv()
-home = os.getenv('PROJECT_HOME')
+from src.dirs import HOME
 
 
 def load_csvs(folder='raw', recursive=False):
@@ -28,3 +26,34 @@ def load_csvs(folder='raw', recursive=False):
         except pd.errors.ParserError:
             pass
     return data
+
+
+def load_jsonls(folder='raw', recursive=False):
+    """loads all JSON Lines files in a directory"""
+    base = Path(DATAHOME, folder)
+    pattern = '**/*.jsonl'
+    dataset = []
+    for fpath in base.glob(pattern):
+        with open(fpath, 'r') as fi:
+            for line in fi.readlines():
+                data = json.loads(line)
+                dataset.append(data)
+    return dataset
+
+
+def load_artifacts(fldr):
+    """load model artifacts such as csvs, model and JSON files"""
+    path = MODELHOME / fldr
+    artifacts = {
+        'name': fldr, 'path': str(path)
+    }
+    for csv in path.glob('*.csv'):
+        artifacts[csv.stem] = pd.read_csv(csv, index_col=0)
+
+    for pipe in path.glob('*.joblib'):
+        artifacts[pipe.stem] = load(pipe)
+
+    for js in path.glob('*.json'):
+        with open(js, 'r') as fi:
+            artifacts[js.stem] = json.load(fi)
+    return artifacts

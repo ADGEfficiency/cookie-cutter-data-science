@@ -14,17 +14,25 @@ dotenv:
 	echo "PROJECT_NAME=$(PROJECT_NAME)" > .env
 	echo "PROJECT_HOME=$(PROJECT_HOME)" > .env
 
-init:
+init-data:
 	mkdir -p $(PROJECT_HOME)/data/raw
-	mkdir -p $(PROJECT_HOME)/data/interim
-	mkdir -p $(PROJECT_HOME)/data/processed
+	mkdir -p $(PROJECT_HOME)/data/final
+
+init-models:
 	mkdir -p $(PROJECT_HOME)/models
-	mkdir -p $(PROJECT_HOME)/reports
 
-lint:
-	flake8 src
+init:
+	make init-data
+	make init-models
 
-clean_up:
-	find . -type f -name "*.py[co]" -delete
-	find . -type f -name "*.ipynb_checkpoints" -delete
-	find . -type d -name "__pycache__" -delete
+clean-data:
+	rm -rf $(PROJECT_HOME)/data
+	make init-data
+
+clean-models:
+	rm -rf $(PROJECT_HOME)/data
+	make init-data
+
+clean:
+	make clean-data
+	make clean-models

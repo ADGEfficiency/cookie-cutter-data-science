@@ -9,6 +9,12 @@ $ pip install cookiecutter
 $ cookiecutter https://github.com/ADGEfficiency/cookiecutter-data-science
 ```
 
+## Example projects
+
+- [hacking-medium-headlines](https://github.com/ADGEfficiency/hacking-medium-headlines)
+- [Rossman Kaggle Mini-Competition Model Solution](https://github.com/ADGEfficiency/minicomp-rossman-solution)
+
+
 ## Philosophy
 
 ### Changes from cookiecutterdatascience
