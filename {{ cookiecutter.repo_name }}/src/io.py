@@ -8,7 +8,7 @@ from src.dirs import HOME
 
 def load_csvs(folder='raw', recursive=False):
     """loads all CSVs in a directory"""
-    base = Path(home, 'data', folder)
+    base = Path(HOME, 'data', folder)
 
     if recursive:
         pattern = '**/*.csv'
@@ -56,4 +56,5 @@ def load_artifacts(fldr):
     for js in path.glob('*.json'):
         with open(js, 'r') as fi:
             artifacts[js.stem] = json.load(fi)
+
     return artifacts
