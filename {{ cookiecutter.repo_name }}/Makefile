@@ -15,24 +15,16 @@ dotenv:
 	echo "PROJECT_HOME=$(PROJECT_HOME)" > .env
 
 init-data:
+	rm -rf $(PROJECT_HOME)/data
 	mkdir -p $(PROJECT_HOME)/data/raw
 	mkdir -p $(PROJECT_HOME)/data/final
 
 init-models:
+	rm -rf $(PROJECT_HOME)/data
 	mkdir -p $(PROJECT_HOME)/models
 
 init:
+	make requirements
+	make dotenv
 	make init-data
 	make init-models
-
-clean-data:
-	rm -rf $(PROJECT_HOME)/data
-	make init-data
-
-clean-models:
-	rm -rf $(PROJECT_HOME)/data
-	make init-data
-
-clean:
-	make clean-data
-	make clean-models
